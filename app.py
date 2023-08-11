@@ -31,6 +31,7 @@ def index():
 
     if request.method == 'POST' and 'photo' in request.files:
         photo = request.files['photo']
+        num_results = int(request.form['num_results']) 
         if photo.filename != '':
             photo_data = photo.read()
             
@@ -38,7 +39,7 @@ def index():
             base64_img = base64.b64encode(photo_data).decode('utf-8')
 
             # Perform the search
-            search_result = searcher.search(photo_data, 10)
+            search_result = searcher.search(photo_data, num_results)
 
             # Prepare the result for rendering
             for similarity, image_path in search_result:

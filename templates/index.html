@@ -30,10 +30,17 @@
         label {
             font-weight: bold;
             margin-right: 0.5rem;
+            display: block;
+            margin-bottom: 0.3rem;
         }
-        input[type="file"] {
-            display: inline-block;
-            margin-bottom: 0.5rem;
+        input[type="file"], input[type="number"] {
+            display: block;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
         }
         button[type="submit"] {
             background-color: #333;
@@ -41,6 +48,8 @@
             border: none;
             padding: 0.5rem 1rem;
             cursor: pointer;
+            display: block;
+            margin: 0 auto;
         }
         h2 {
             font-size: 1.5rem;
@@ -49,21 +58,32 @@
         ul {
             list-style: none;
             padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
         }
         li {
-            display: flex;
-            align-items: center;
+            flex-basis: calc(33.33% - 1rem);
             margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         img {
-            max-width: 200px;
+            max-width: 100%;
             height: auto;
-            margin-right: 1rem;
+            margin-bottom: 0.5rem;
             box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
         }
         p {
             margin: 0;
             font-size: 1rem;
+        }
+
+        /* Style for the smaller uploaded image */
+        #uploaded-image {
+            max-width: 300px;
+            height: auto;
         }
     </style>
 </head>
@@ -75,15 +95,20 @@
         <form method="POST" enctype="multipart/form-data">
             <label for="file">Upload Image:</label>
             <input type="file" id="file" name="photo" accept=".jpg, .jpeg, .png" required>
+            
+            <!-- Add input field for specifying the number of results -->
+            <label for="num_results">Number of Results:</label>
+            <input type="number" id="num_results" name="num_results" value="3" min="1" required>
+            
             <button type="submit">Search</button>
         </form>
         
         <h2>Uploaded Image:</h2>
         {% if base64_img %}
-        <img src="data:image/jpeg;base64,{{ base64_img }}" alt="Uploaded Image"/>
+        <img id="uploaded-image" src="data:image/jpeg;base64,{{ base64_img }}" alt="Uploaded Image"/>
         {% endif %}
         
-        <h2>Search Result:</h2>
+        <h2>Search Results:</h2>
         <ul>
             {% for item in result_list %}
             <li>
