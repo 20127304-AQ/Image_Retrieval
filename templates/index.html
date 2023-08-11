@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            margin-bottom: 1.5rem;
+        }
+        label {
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        input[type="file"] {
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+        button[type="submit"] {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+        }
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        img {
+            max-width: 200px;
+            height: auto;
+            margin-right: 1rem;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+        }
+        p {
+            margin: 0;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Image Search</h1>
+    </header>
+    <div class="container">
+        <form method="POST" enctype="multipart/form-data">
+            <label for="file">Upload Image:</label>
+            <input type="file" id="file" name="photo" accept=".jpg, .jpeg, .png" required>
+            <button type="submit">Search</button>
+        </form>
+        
+        <h2>Uploaded Image:</h2>
+        {% if base64_img %}
+        <img src="data:image/jpeg;base64,{{ base64_img }}" alt="Uploaded Image"/>
+        {% endif %}
+        
+        <h2>Search Result:</h2>
+        <ul>
+            {% for item in result_list %}
+            <li>
+                <img src="data:image/jpeg;base64,{{ item['image_path'] }}" alt="Result Image"/>
+                <div>
+                    <p>Similarity: {{ item['similarity'] }}</p>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
