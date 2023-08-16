@@ -21,7 +21,7 @@ def image_path_to_base64(img_path):
     return encoded_string
 
 # Load your feature dictionary and create an ImageSearcher instance
-file_path = 'feature_vectors.pkl'
+file_path = 'mobilenet_v2.pkl'
 
 with open(file_path, 'rb') as file:
     loaded_dict = pickle.load(file)
@@ -69,15 +69,15 @@ def index():
 
             # Perform k-nearest neighbor search using the KDTree
             k_nearest_distances, k_nearest_indices = kdtree.query(input_feat, k=num_results)
-
             # Prepare the result for rendering
             for distance, idx in zip(k_nearest_distances, k_nearest_indices):
                 image_path = image_paths[idx]
                 similarity = 1 - distance
                 full_path = './preprocessed_dataset/' + image_path
+                celeb_name = (" ").join(image_path.split("_")[:-1])
                 base64_image = image_path_to_base64(full_path)
-                result_list.append({'image_path': base64_image, 'similarity': similarity,
-                                    'original_image_path': image_path})
+                result_list.append({'image_path': base64_image, 'similarity': round(similarity, 4),
+                                    'original_image_path': celeb_name})
 
     return render_template('index.html', result_list=result_list, base64_img=base64_img)
 
