@@ -110,11 +110,12 @@
         
         <h2>Search Results:</h2>
         <ul>
-            {% for item in result_list %}
+            {% for item in result_list|sort(attribute='similarity', reverse=True) %}
             <li>
                 <img src="data:image/jpeg;base64,{{ item['image_path'] }}" alt="Result Image"/>
                 <div>
                     <p>Similarity: {{ item['similarity'] }}</p>
+                    <p>Image Path: {{ item['original_image_path'] }}</p>
                 </div>
             </li>
             {% endfor %}
