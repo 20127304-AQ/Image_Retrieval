@@ -22,7 +22,7 @@ def image_path_to_base64(img_path):
     return encoded_string
 
 # Load your feature dictionary and create an ImageSearcher instance
-file_path = 'feature_vectors.pkl'
+file_path = 'mobilenetv2.pkl'
 
 with open(file_path, 'rb') as file:
     loaded_dict = pickle.load(file)
