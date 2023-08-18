@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 import pickle
+import math
 import base64
 import numpy as np
 import cv2
@@ -21,7 +22,7 @@ def image_path_to_base64(img_path):
     return encoded_string
 
 # Load your feature dictionary and create an ImageSearcher instance
-file_path = 'mobilenet_v2.pkl'
+file_path = 'feature_vectors.pkl'
 
 with open(file_path, 'rb') as file:
     loaded_dict = pickle.load(file)
@@ -72,7 +73,7 @@ def index():
             # Prepare the result for rendering
             for distance, idx in zip(k_nearest_distances, k_nearest_indices):
                 image_path = image_paths[idx]
-                similarity = 1 - distance
+                similarity = np.dot(feature_vectors[idx], input_feat) / (np.linalg.norm(feature_vectors[idx]) * np.linalg.norm(input_feat))
                 full_path = './preprocessed_dataset/' + image_path
                 celeb_name = (" ").join(image_path.split("_")[:-1])
                 base64_image = image_path_to_base64(full_path)
