@@ -1,3 +1,4 @@
 __pycache__/
 preprocessed_dataset/
 uploads/
+*.pkl
