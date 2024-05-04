@@ -15,7 +15,7 @@ Retrieve top k similar images using Haar Cascade, MobileNetV2, KDTree.
   - Upload input image into the module.
   - Apply face-detection classifier model Haar Cascade for input image.
   - Apply pretrained model MobileNetV2 for extracting input image into feature vector.
-  - Retrieve top k similar image from KDTree.
+  - Retrieve top k similar images from KDTree.
   - Display images.
  
 # Technology
